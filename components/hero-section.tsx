@@ -16,6 +16,7 @@ export default function HeroSection() {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
+  if (window.innerWidth >= 768) {
     const handleWheel = (e: WheelEvent) => {
       if (step < 3) {
         e.preventDefault();
@@ -28,8 +29,20 @@ export default function HeroSection() {
 
     window.addEventListener("wheel", handleWheel, { passive: false });
 
-    return () => window.removeEventListener("wheel", handleWheel);
-  }, [step]);
+    return () =>
+      window.removeEventListener("wheel", handleWheel);
+  }
+
+  const timer1 = setTimeout(() => setStep(1), 500);
+  const timer2 = setTimeout(() => setStep(2), 1200);
+  const timer3 = setTimeout(() => setStep(3), 1900);
+
+  return () => {
+    clearTimeout(timer1);
+    clearTimeout(timer2);
+    clearTimeout(timer3);
+  };
+}, []);
 
   return (
     <section
@@ -71,9 +84,9 @@ export default function HeroSection() {
   }}
   transition={{
     type: "spring",
-    stiffness: 65,
-    damping: 20,
-    mass: 1.1,
+    stiffness: 42,
+    damping: 18,
+    mass: 1.4,
   }}
   className="absolute"
   style={{ zIndex: 30 - index }}
