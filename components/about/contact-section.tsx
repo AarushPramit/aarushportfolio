@@ -55,27 +55,42 @@ export default function ContactSection() {
         {/* Contact Layout */}
         <div className="mt-20 grid gap-6 lg:grid-cols-5">
           {/* Featured Email Card */}
-          <motion.a
-            href="mailto:burntpalette@gmail.com"
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            whileHover={{ y: -8 }}
-            className="group relative overflow-hidden rounded-[32px] border border-cyan-400/20 bg-white/[0.03] p-8 lg:col-span-2"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
+          {/* Featured Email Card */}
+<motion.a
+  href="mailto:burntpalette@gmail.com"
+  initial={{ opacity: 0, x: -40 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8 }}
+  whileHover={{ y: -8 }}
+  className="group relative w-full overflow-hidden rounded-[32px] border border-cyan-400/20 bg-white/[0.03] p-6 sm:p-8 lg:col-span-2"
+>
+  <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
 
-            <div>
-  <h3 className="mt-4 break-all text-2xl font-semibold leading-tight text-white sm:text-3xl">
-    burntpalette@gmail.com
-  </h3>
+  <div className="relative flex h-full flex-col justify-between">
+    {/* Icon */}
+    <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-400/20 bg-black/50">
+      <Mail className="h-8 w-8 text-cyan-400" />
+    </div>
 
-  <p className="mt-3 text-zinc-400">
-    Best way to reach me for internships, product design and collaborations.
-  </p>
-</div>
-          </motion.a>
+    {/* Content */}
+    <div className="mt-8">
+      <h3 className="break-all text-2xl font-semibold leading-tight text-white sm:text-3xl">
+        burntpalette@gmail.com
+      </h3>
+
+      <p className="mt-3 text-zinc-400">
+        Best way to reach me for internships, product design and collaborations.
+      </p>
+    </div>
+
+    {/* CTA */}
+    <div className="mt-10 flex items-center gap-2 text-cyan-400">
+      <span>Send an Email</span>
+      <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+    </div>
+  </div>
+</motion.a>
 
           {/* Right Side Cards */}
           <div className="space-y-6 lg:col-span-3">
