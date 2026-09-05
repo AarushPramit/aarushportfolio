@@ -150,12 +150,7 @@ document.cookie = "introPlayed=true; path=/; max-age=86400";
           AI • PRODUCT DESIGN
         </motion.p>
 
-        <motion.p
-          animate={{ opacity: 1 - progress }}
-          className="mt-16 text-xs uppercase tracking-[0.32em] text-zinc-600"
-        >
-          SCROLL TO ENTER
-        </motion.p>
+        
       </div>
 
       {/* Top Panel */}
