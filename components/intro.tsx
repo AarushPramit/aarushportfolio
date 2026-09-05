@@ -51,6 +51,7 @@ useEffect(() => {
 
       setTimeout(() => {
         sessionStorage.setItem("introPlayed", "true");
+document.cookie = "introPlayed=true; path=/; max-age=86400";
         document.body.style.overflow = "auto";
         setShowIntro(false);
       }, 800);
