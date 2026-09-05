@@ -16,23 +16,27 @@ export default function HeroSection() {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
+  // Desktop
   if (window.innerWidth >= 768) {
     const handleWheel = (e: WheelEvent) => {
-      if (step < 3) {
-        e.preventDefault();
+      // Once cards are fully opened, allow normal page scrolling
+      if (step >= 3) return;
 
-        if (e.deltaY > 0) {
-          setStep((prev) => Math.min(prev + 1, 3));
-        }
+      e.preventDefault();
+
+      if (e.deltaY > 0) {
+        setStep((prev) => Math.min(prev + 1, 3));
       }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
 
-    return () =>
+    return () => {
       window.removeEventListener("wheel", handleWheel);
+    };
   }
 
+  // Mobile
   const timer1 = setTimeout(() => setStep(1), 500);
   const timer2 = setTimeout(() => setStep(2), 1200);
   const timer3 = setTimeout(() => setStep(3), 1900);
@@ -42,7 +46,7 @@ export default function HeroSection() {
     clearTimeout(timer2);
     clearTimeout(timer3);
   };
-}, []);
+}, [step]);
 
   return (
     <section
@@ -78,14 +82,9 @@ export default function HeroSection() {
         key={card.title}
         initial={false}
         animate={{
-          x: positions[index],
-          rotate:
-            index === 0 && step >= 1
-              ? -8
-              : index === 2 && step >= 3
-              ? 8
-              : 0,
-        }}
+  x: positions[index],
+  rotate: 0,
+}}
         transition={{
           type: "spring",
           stiffness: 42,
