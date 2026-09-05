@@ -64,43 +64,59 @@ export default function HeroSection() {
       </div>
 
       {/* Card Deck */}
-      <div className="relative mt-16 flex h-[430px] items-center justify-center">
-        {cards.map((card, index) => {
-          const positions = [
-            step >= 1 ? -340 : 0,
-            0,
-            step >= 3 ? 340 : 0,
-          ];
+      {/* ---------- Desktop Card Deck ---------- */}
+<div className="relative mt-16 hidden h-[430px] items-center justify-center md:flex">
+  {cards.map((card, index) => {
+    const positions = [
+      step >= 1 ? -340 : 0,
+      0,
+      step >= 3 ? 340 : 0,
+    ];
 
-          const rotations = [0, 0, 0];
+    return (
+      <motion.div
+        key={card.title}
+        initial={false}
+        animate={{
+          x: positions[index],
+          rotate:
+            index === 0 && step >= 1
+              ? -8
+              : index === 2 && step >= 3
+              ? 8
+              : 0,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 42,
+          damping: 18,
+          mass: 1.4,
+        }}
+        className="absolute"
+        style={{ zIndex: 30 - index }}
+      >
+        <FlipCard image={card.src} title={card.title} />
+      </motion.div>
+    );
+  })}
+</div>
 
-          return (
-            <motion.div
-  key={card.title}
-  initial={false}
-  animate={{
-    x: positions[index],
-    rotate: 0,
-  }}
-  transition={{
-    type: "spring",
-    stiffness: 42,
-    damping: 18,
-    mass: 1.4,
-  }}
-  className="absolute"
-  style={{ zIndex: 30 - index }}
->
-              <FlipCard image={card.src} title={card.title} />
-            </motion.div>
-          );
-        })}
+{/* ---------- Mobile Horizontal Scroll ---------- */}
+<div className="mt-12 md:hidden">
+  <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 scrollbar-hide">
+    {cards.map((card) => (
+      <div
+        key={card.title}
+        className="w-[250px] shrink-0 snap-center"
+      >
+        <FlipCard image={card.src} title={card.title} />
       </div>
-      <div className="mt-12 flex justify-center">
-  <PortfolioButton
-    text="About Me"
-    href="/about"
-  />
+    ))}
+  </div>
+
+  <p className="mt-3 text-center text-xs uppercase tracking-[0.25em] text-zinc-500">
+    Swipe to explore →
+  </p>
 </div>
 
       
@@ -119,11 +135,12 @@ function FlipCard({
 
   return (
     <motion.div
-      onHoverStart={() => setFlipped(true)}
-      onHoverEnd={() => setFlipped(false)}
-      style={{ perspective: 1200 }}
-      className="h-[340px] w-[250px] cursor-pointer"
-    >
+  onHoverStart={() => setFlipped(true)}
+  onHoverEnd={() => setFlipped(false)}
+  onTap={() => setFlipped(!flipped)}
+  style={{ perspective: 1200 }}
+  className="h-[340px] w-[250px] cursor-pointer"
+>
       <motion.div
         animate={{ rotateY: flipped ? 180 : 0 }}
         transition={{ duration: 0.65 }}
