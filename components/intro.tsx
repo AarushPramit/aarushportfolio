@@ -35,17 +35,34 @@ export default function Intro() {
     return () => window.removeEventListener("mousemove", move);
   }, [mouseX, mouseY]);
 
-  /* Scroll animation */
-  /* Scroll animation (Desktop only) */
+  /* Intro animation */
 useEffect(() => {
   if (!showIntro) return;
 
-  // Skip intro lock on mobile devices
-  if (window.innerWidth < 768) {
-    document.body.style.overflow = "auto";
-    return;
+  const isMobile = window.innerWidth < 768;
+
+  // MOBILE → Auto play
+  if (isMobile) {
+    document.body.style.overflow = "hidden";
+
+    const timer = setTimeout(() => {
+      setProgress(1);
+      setFinished(true);
+
+      setTimeout(() => {
+        sessionStorage.setItem("introPlayed", "true");
+        document.body.style.overflow = "auto";
+        setShowIntro(false);
+      }, 800);
+    }, 1800);
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = "auto";
+    };
   }
 
+  // DESKTOP → Scroll to enter
   document.body.style.overflow = "hidden";
 
   const handleWheel = (e: WheelEvent) => {
@@ -143,7 +160,10 @@ useEffect(() => {
       {/* Top Panel */}
       <motion.div
         animate={{ y: `-${offset}%` }}
-        transition={{ ease: "easeOut", duration: 0.15 }}
+        transition={{
+  duration: 1,
+  ease: [0.22, 1, 0.36, 1],
+}}
         className="absolute left-0 top-0 h-1/2 w-full"
       >
         <div className="h-full w-full border-b border-white/10 bg-gradient-to-b from-[#111111] to-[#050505]" />
@@ -153,7 +173,10 @@ useEffect(() => {
       {/* Bottom Panel */}
       <motion.div
         animate={{ y: `${offset}%` }}
-        transition={{ ease: "easeOut", duration: 0.15 }}
+        transition={{
+  duration: 1,
+  ease: [0.22, 1, 0.36, 1],
+}}
         className="absolute bottom-0 left-0 h-1/2 w-full"
       >
         <div className="h-full w-full border-t border-white/10 bg-gradient-to-t from-[#111111] to-[#050505]" />
