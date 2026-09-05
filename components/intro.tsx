@@ -36,40 +36,47 @@ export default function Intro() {
   }, [mouseX, mouseY]);
 
   /* Scroll animation */
-  useEffect(() => {
-    if (!showIntro) return;
+  /* Scroll animation (Desktop only) */
+useEffect(() => {
+  if (!showIntro) return;
 
-    document.body.style.overflow = "hidden";
+  // Skip intro lock on mobile devices
+  if (window.innerWidth < 768) {
+    document.body.style.overflow = "auto";
+    return;
+  }
 
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
+  document.body.style.overflow = "hidden";
 
-      if (finished) return;
+  const handleWheel = (e: WheelEvent) => {
+    e.preventDefault();
 
-      setProgress((prev) => {
-        const next = Math.min(Math.max(prev + e.deltaY * 0.002, 0), 1);
+    if (finished) return;
 
-        if (next >= 1 && !finished) {
-          setFinished(true);
+    setProgress((prev) => {
+      const next = Math.min(Math.max(prev + e.deltaY * 0.002, 0), 1);
 
-          setTimeout(() => {
-            sessionStorage.setItem("introPlayed", "true");
-            document.body.style.overflow = "auto";
-            setShowIntro(false);
-          }, 800);
-        }
+      if (next >= 1) {
+        setFinished(true);
 
-        return next;
-      });
-    };
+        setTimeout(() => {
+          sessionStorage.setItem("introPlayed", "true");
+          document.body.style.overflow = "auto";
+          setShowIntro(false);
+        }, 800);
+      }
 
-    window.addEventListener("wheel", handleWheel, { passive: false });
+      return next;
+    });
+  };
 
-    return () => {
-      document.body.style.overflow = "auto";
-      window.removeEventListener("wheel", handleWheel);
-    };
-  }, [finished, showIntro]);
+  window.addEventListener("wheel", handleWheel, { passive: false });
+
+  return () => {
+    document.body.style.overflow = "auto";
+    window.removeEventListener("wheel", handleWheel);
+  };
+}, [finished, showIntro]);
 
   if (!showIntro) return null;
 
