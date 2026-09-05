@@ -66,29 +66,15 @@ export default function ContactSection() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
 
-            <div className="relative flex h-full flex-col justify-between">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-400/20 bg-black/50">
-                <Mail className="h-8 w-8 text-cyan-400" />
-              </div>
+            <div>
+  <h3 className="mt-4 break-all text-2xl font-semibold leading-tight text-white sm:text-3xl">
+    burntpalette@gmail.com
+  </h3>
 
-              <div>
-                
-
-                <h3 className="mt-4 text-3xl font-semibold text-white">
-                  burntpalette@gmail.com
-                </h3>
-
-                <p className="mt-3 text-zinc-400">
-                  Best way to reach me for internships, product design and
-                  collaborations.
-                </p>
-              </div>
-
-              <div className="mt-10 flex items-center gap-2 text-cyan-400">
-                <span>Send an Email</span>
-                <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </div>
-            </div>
+  <p className="mt-3 text-zinc-400">
+    Best way to reach me for internships, product design and collaborations.
+  </p>
+</div>
           </motion.a>
 
           {/* Right Side Cards */}
